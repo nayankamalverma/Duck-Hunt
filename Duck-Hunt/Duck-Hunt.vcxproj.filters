@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Main\GameService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Global\ServiceLocator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\GraphicService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Event\EventService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI\UIService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI\MainMenu\MainMenuUIController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Time\TimeService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Header\Main\GameService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Global\ServiceLocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Graphics\GraphicService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Event\EventService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\UI\UIService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\UI\MainMenu\MainMenuUIController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Time\TimeService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Space-Invaders\Space-Invaders\sfml-graphics-d-2.dll" />
+    <None Include="..\..\Space-Invaders\Space-Invaders\sfml-network-d-2.dll" />
+    <None Include="..\..\Space-Invaders\Space-Invaders\sfml-system-d-2.dll" />
+    <None Include="..\..\Space-Invaders\Space-Invaders\sfml-window-d-2.dll" />
+    <None Include="..\..\Space-Invaders\Space-Invaders\sfml-audio-d-2.dll" />
+    <None Include="..\..\Space-Invaders\Space-Invaders\openal32.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\textures\NES - Duck Hunt - Title Screen.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\textures\NES - Duck Hunt - Backgrounds.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\textures\NES - Duck Hunt - Clay Shooting.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\textures\NES - Duck Hunt - Ducks.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\textures\NES - Duck Hunt - The Dog.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\textures\dog.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\textures\NES - Duck Hunt - The Dog-Smell.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
