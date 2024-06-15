@@ -51,7 +51,7 @@ namespace Main
 
 	void GameService::render()
 	{
-		game_window->clear();
+		game_window->clear(sf::Color::Blue);
 		service_locator->render();
 		game_window->display();
 	}

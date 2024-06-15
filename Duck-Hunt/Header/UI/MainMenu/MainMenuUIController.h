@@ -8,7 +8,8 @@ namespace UI
 		class MainMenuUIController
 		{
 		private:
-			const sf::String background_texture_path = "assets/textures/bg.png";
+			const sf::String background_texture_path = "assets/textures/mainMenu.png";
+			const sf::String game_title_texture_path = "assets/textures/NES - Duck Hunt - Title .png";
 			const sf::String play_button_texture_path = "assets/textures/NES - Duck Hunt - Title .png";
 			const sf::String instructions_button_texture_path = "assets/textures/instructions_button.png";
 			const sf::String quit_button_texture_path = "assets/textures/quit_button.png";
@@ -23,6 +24,8 @@ namespace UI
 			// Textures:
 			sf::Texture background_texture;
 			sf::Sprite background_sprite;
+			sf::Texture title_texture;
+			sf::Sprite title_sprite;
 
 			sf::Texture play_button_texture;
 			sf::Sprite play_button_sprite;

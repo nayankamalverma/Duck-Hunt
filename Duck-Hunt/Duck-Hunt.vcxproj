@@ -139,6 +139,7 @@
     <ClCompile Include="Source\Graphics\GraphicService.cpp" />
     <ClCompile Include="Source\Main\GameService.cpp" />
     <ClCompile Include="Source\Time\TimeService.cpp" />
+    <ClCompile Include="Source\UI\GamePlay\GamePlayUIController.cpp" />
     <ClCompile Include="Source\UI\MainMenu\MainMenuUIController.cpp" />
     <ClCompile Include="Source\UI\UIService.cpp" />
   </ItemGroup>
@@ -148,6 +149,7 @@
     <ClInclude Include="Header\Graphics\GraphicService.h" />
     <ClInclude Include="Header\Main\GameService.h" />
     <ClInclude Include="Header\Time\TimeService.h" />
+    <ClInclude Include="Header\UI\GamePlay\GamePlayUIController.h" />
     <ClInclude Include="Header\UI\MainMenu\MainMenuUIController.h" />
     <ClInclude Include="Header\UI\UIService.h" />
   </ItemGroup>
@@ -160,6 +162,7 @@
     <None Include="..\..\Space-Invaders\Space-Invaders\sfml-window-d-2.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\..\Users\nayan\Downloads\NES - Duck Hunt - The Dog\background.png" />
     <Image Include="Assets\textures\dog.png" />
     <Image Include="Assets\textures\NES - Duck Hunt - Backgrounds.png" />
     <Image Include="Assets\textures\NES - Duck Hunt - Clay Shooting.png" />

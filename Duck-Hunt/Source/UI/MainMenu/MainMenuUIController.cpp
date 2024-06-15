@@ -105,18 +105,25 @@ namespace UI
         {
             sf::Vector2f mouse_position = sf::Vector2f(sf::Mouse::getPosition(*game_window));
 
-            if (clickedButton(&play_button_sprite, mouse_position))
+            EventService* event_service = ServiceLocator::getInstance()->getEventService();
+            if(event_service->pressedLeftMouseButton())
             {
-                GameService::setGameState(GameState::GAMEPLAY);
+                if (mouse_position.x > 440 && mouse_position.x < 840) //Since all buttons are in a perfect column, they will all be in this x range
+                {
+                    if (mouse_position.y > 230 && mouse_position.y < 300) //if cursor is in y range for play button
+                    {
+                        GameService::setGameState(GameState::GAMEPLAY);
+                    }
+                    else if (mouse_position.y > 330 && mouse_position.y < 400) //if cursor is in y range for 'how to play' button
+                    {
+                        printf("Clicked Instruction Button \n");
+                    }
+                    else if (mouse_position.y > 430 && mouse_position.y < 500) //if cursor is in y range for exit button
+                    {
+                        game_window->close();
+                    }
+                }
             }
-
-            if (clickedButton(&instructions_button_sprite, mouse_position))
-            {
-                printf("Clicked Instruction Button \n");
-            }
-
-            if (clickedButton(&quit_button_sprite, mouse_position))
-                game_window->close();
         }
 
         bool MainMenuUIController::clickedButton(sf::Sprite* button_sprite, sf::Vector2f mouse_position)
