@@ -39,6 +39,9 @@
     <ClCompile Include="Source\Time\TimeService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\UI\GamePlay\GamePlayUIController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Main\GameService.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header\Time\TimeService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\UI\GamePlay\GamePlayUIController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -91,6 +97,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Assets\textures\NES - Duck Hunt - The Dog-Smell.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Users\nayan\Downloads\NES - Duck Hunt - The Dog\background.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
