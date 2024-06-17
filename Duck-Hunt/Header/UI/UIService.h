@@ -1,6 +1,7 @@
 #pragma once
 #include "../../header/UI/MainMenu/MainMenuUIController.h"
 #include "GamePlay/GamePlayUIController.h"
+#include "PauseMenu/PauseMenuUIcontroller.h"
 
 namespace UI
 {
@@ -9,6 +10,7 @@ namespace UI
 	private:
 		MainMenu::MainMenuUIController* main_menu_controller;
 		GamePlay::GamePlayUIController* game_play_controller;
+		PauseMenu::PauseMenuUIController* pause_menu_controller;
 
 		void createControllers();
 		void initializeControllers();

@@ -134,6 +134,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Source\Element\DuckController.cpp" />
+    <ClCompile Include="Source\Element\DuckService.cpp" />
     <ClCompile Include="Source\Event\EventService.cpp" />
     <ClCompile Include="Source\Global\ServiceLocator.cpp" />
     <ClCompile Include="Source\Graphics\GraphicService.cpp" />
@@ -141,9 +143,12 @@
     <ClCompile Include="Source\Time\TimeService.cpp" />
     <ClCompile Include="Source\UI\GamePlay\GamePlayUIController.cpp" />
     <ClCompile Include="Source\UI\MainMenu\MainMenuUIController.cpp" />
+    <ClCompile Include="Source\UI\PauseMenu\PauseMenuUIController.cpp" />
     <ClCompile Include="Source\UI\UIService.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header\Element\DuckController.h" />
+    <ClInclude Include="Header\Element\DuckService.h" />
     <ClInclude Include="Header\Event\EventService.h" />
     <ClInclude Include="Header\Global\ServiceLocator.h" />
     <ClInclude Include="Header\Graphics\GraphicService.h" />
@@ -151,6 +156,7 @@
     <ClInclude Include="Header\Time\TimeService.h" />
     <ClInclude Include="Header\UI\GamePlay\GamePlayUIController.h" />
     <ClInclude Include="Header\UI\MainMenu\MainMenuUIController.h" />
+    <ClInclude Include="Header\UI\PauseMenu\PauseMenuUIcontroller.h" />
     <ClInclude Include="Header\UI\UIService.h" />
   </ItemGroup>
   <ItemGroup>
