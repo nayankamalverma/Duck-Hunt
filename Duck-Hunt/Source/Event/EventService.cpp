@@ -29,7 +29,7 @@ namespace Event {
         {
             while (game_window->pollEvent(game_event))
             {
-                if (hasQuitGame() || gameWindowWasClosed())
+                if ( gameWindowWasClosed())
                     game_window->close();
             }
         }

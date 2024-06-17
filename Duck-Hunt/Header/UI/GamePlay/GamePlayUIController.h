@@ -7,9 +7,9 @@ namespace GamePlay
 	{
 		sf::RenderWindow* game_window;
 
-		const sf::String background_texture_path = "assets/textures/background-2.png";
+		const sf::String background_texture_path = "assets/textures/background.png";
 		const sf::String tree_texture_path = "assets/textures/tree_1.png-";
-		const sf::String grass_texture_path = "Assets/textures/NES - Duck Hunt - The Dog-Smell.png";
+		const sf::String grass_texture_path = "Assets/textures/NES - Duck Hunt - The Dog-Smell.png-";
 
 		sf::Texture background_texture;
 		sf::Sprite background_sprite;

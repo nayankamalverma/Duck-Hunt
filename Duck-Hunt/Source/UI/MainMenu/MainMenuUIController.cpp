@@ -110,15 +110,15 @@ namespace UI
             {
                 if (mouse_position.x > 440 && mouse_position.x < 840) //Since all buttons are in a perfect column, they will all be in this x range
                 {
-                    if (mouse_position.y > 230 && mouse_position.y < 300) //if cursor is in y range for play button
+                    if (mouse_position.y > 260 && mouse_position.y < 330) //if cursor is in y range for play button
                     {
                         GameService::setGameState(GameState::GAMEPLAY);
                     }
-                    else if (mouse_position.y > 330 && mouse_position.y < 400) //if cursor is in y range for 'how to play' button
+                    else if (mouse_position.y > 360 && mouse_position.y < 430) //if cursor is in y range for 'how to play' button
                     {
                         printf("Clicked Instruction Button \n");
                     }
-                    else if (mouse_position.y > 430 && mouse_position.y < 500) //if cursor is in y range for exit button
+                    else if (mouse_position.y > 460 && mouse_position.y < 530) //if cursor is in y range for exit button
                     {
                         game_window->close();
                     }
