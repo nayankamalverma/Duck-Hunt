@@ -5,42 +5,36 @@
 #include <chrono>
 namespace Element {
 
-    enum class MovementDirection
-    {
-        LEFT,
-        RIGHT,
-        DOWN,
-        LEFT_DOWN,
-        RIGHT_DOWN,
-    };
-
-    class DuckController {
+	class DuckController {
     public:
         DuckController(sf::Texture& texture);
-        ~DuckController() = default;
+        ~DuckController();
 
-        sf::RenderWindow* window;
-
-        MovementDirection move_direction;
 
         void initialize();
         void update(float deltaTime);
         void render(sf::RenderWindow* window);
 
-    private:
-        sf::Sprite sprite;
-        std::vector<sf::IntRect> frames;
-        size_t currentFrame;
-        float frameTime;
-        float currentFrameTime;
-        float x_velocity;
-        float y_velocity;
+        bool isClicked(sf::Vector2i mousePosition);
+        void startRandomMovement(float duration);
 
-        void move();
-        void moveLeft();
-        void moveRight();
-        void moveDiagonalLeft();
-        void moveDiagonalRight();
-        void moveSpriteRandomly(sf::Sprite& sprite, sf::Time duration);
+    private:
+
+        int frameWidth = 110;
+        int frameHeight = 110;
+
+        void animate(float deltaTime);
+        void move(float deltaTime);
+
+        sf::Sprite duckSprite;
+        std::vector<sf::IntRect> animationFrames;
+        int currentFrame;
+        float frameTime;
+        float animationDuration;
+        float animationTimer;
+        float moveDuration;
+        float moveTimer;
+        sf::Vector2f direction;
+        bool moving;
     };
 }

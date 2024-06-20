@@ -10,13 +10,14 @@ namespace Global {
 	using namespace UI;
 	using namespace Time;
 	using namespace Element;
+	using namespace GamePlay;
 
 	ServiceLocator::ServiceLocator() {
 		graphic_service = nullptr;
 		event_service = nullptr;
 		ui_service = nullptr;
 		time_service = nullptr;
-		duck_service = nullptr;
+		game_play = nullptr;
 		createService();
 	}
 	
@@ -25,8 +26,7 @@ namespace Global {
 		time_service = new TimeService();
 		graphic_service = new GraphicService();
 		ui_service = new UIService();
-		duck_service = new DuckService();
-		printf("create\n");
+		game_play = new GamePlayService();
 	}
 
 	ServiceLocator::~ServiceLocator()
@@ -44,7 +44,7 @@ namespace Global {
 		event_service->initialize();
 		time_service->initialize();
 		ui_service->initialize();
-		duck_service->initialize();
+		game_play->initialize();
 
 	} 
 
@@ -56,7 +56,7 @@ namespace Global {
 		ui_service->update();
 		if (GameService::getGameState() == GameState::GAMEPLAY)
 		{
-			duck_service->update();
+			game_play->update();
 		}
 	}
 	
@@ -66,7 +66,7 @@ namespace Global {
 		ui_service->render();
 		if (GameService::getGameState() == GameState::GAMEPLAY)
 		{
-			duck_service->render();
+			game_play->render();
 		}
 	}
 
@@ -75,17 +75,18 @@ namespace Global {
 		delete(event_service);
 		delete(ui_service);
 		delete(time_service);
-		delete(duck_service);
+		delete(game_play);
 		time_service = nullptr;
 		graphic_service=nullptr;
 		event_service = nullptr;
 		ui_service = nullptr;
-		duck_service = nullptr;
+		game_play = nullptr;
 	}
 
 	GraphicService* ServiceLocator::getGraphicService(){ return graphic_service;}
 	EventService* ServiceLocator::getEventService() { return event_service; }
 	UIService* ServiceLocator::getUIService() { return ui_service; }
 	TimeService* ServiceLocator::getTimeService() { return time_service; }
-	DuckService* ServiceLocator::getDuckService() { return duck_service; }
+	GamePlay::GamePlayService* ServiceLocator::getGamePlayService() { return game_play; }
+
 }

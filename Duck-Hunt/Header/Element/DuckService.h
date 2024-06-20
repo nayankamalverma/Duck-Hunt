@@ -3,10 +3,11 @@
 #include <vector>
 #include "../Time/TimeService.h"
 
+#include "../../Header/Element/DuckController.h"
+
 
 namespace Element {
 
-    class DuckController;
 
     class DuckService {
     private:
@@ -16,8 +17,6 @@ namespace Element {
         sf::Texture duckTexture;
         sf::String duck_texture_path="assets/textures/ducks.png";
 
-    	sf::RenderWindow* window;
-        Time::TimeService* time;
 
         void updateSpawnTimer();
         void processDuckSpawn();
@@ -30,8 +29,13 @@ namespace Element {
         void update();
         void render();
         void reset();
+        void handleMouseClick(sf::Vector2i mousePosition);
 
         DuckController* spawnDuck();
-        void destroyEnemy(DuckController* duck_controller);
+        void destroyDuck(DuckController* duck_controller);
+
+        bool hasActiveDucks();
+        void spawnMoreDucks();
+        bool checkHit(sf::Vector2i mousePosition);
     };
 }
