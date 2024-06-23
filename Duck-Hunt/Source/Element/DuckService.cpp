@@ -1,15 +1,17 @@
 #include "../../Header/Element/DuckService.h"
 #include "../../Header/Global/ServiceLocator.h"
-#include "../../Header/Element/DuckController.h"
+#include <cstdlib>
 
 namespace Element
 {
+    using namespace Global;
+    DuckService::DuckService() : spawn_timer(1.0f) {
 
-    DuckService::DuckService() : spawn_timer(0.0f) {
-        if (!duckTexture.loadFromFile(duck_texture_path)) {
-            printf( "Error loading duck texture" );
-        }
-        
+        std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
+        game_window = ServiceLocator::getInstance()->getGraphicService()->getGameWindow();
+        time_service = ServiceLocator::getInstance()->getTimeService();
+
     }
 
     DuckService::~DuckService() {
@@ -20,23 +22,20 @@ namespace Element
     }
 
     void DuckService::initialize() {
-        printf("duck init");
         spawn_timer = 0.0f;
         duck_list.clear();
-        window = Global::ServiceLocator::getInstance()->getGraphicService()->getGameWindow();
-        time = Global::ServiceLocator::getInstance()->getTimeService();
     }
 
     void DuckService::update() {
-        updateSpawnTimer();
+        //updateSpawnTimer();
         for (auto duck : duck_list) {
-            duck->update(time->getDeltaTime());
+            duck->update(time_service->getDeltaTime());
         }
     }
 
     void DuckService::render() {
         for (auto duck : duck_list) {
-            duck->render(window);
+            duck->render(game_window);
         }
     }
 
@@ -48,11 +47,23 @@ namespace Element
     }
 
     void DuckService::updateSpawnTimer() {
-        spawn_timer += time->getDeltaTime();
+        spawn_timer += time_service->getDeltaTime();
         if (spawn_timer >= spawn_interval) {
             spawn_timer = 0.0f;
             spawnDuck();
         }
+    }
+
+    DuckType DuckService::getDuckType()
+    {
+        std::srand(static_cast<unsigned int>(std::time(0)));
+        int random_value = std::rand() % (static_cast<int>(DuckType::ORANGE) + 1);
+        return static_cast<DuckType>(random_value);
+    }
+
+
+    bool DuckService::hasActiveDucks() {
+        return !duck_list.empty();
     }
 
     void DuckService::processDuckSpawn() {
@@ -61,18 +72,51 @@ namespace Element
         }
     }
 
+    void DuckService::spawnMoreDucks(int noOfDuck) {
+
+        for (int i = 0; i < noOfDuck; ++i) {
+            spawnDuck();
+        }
+    }
+
     DuckController* DuckService::spawnDuck() {
-        DuckController* newDuck = new DuckController(duckTexture);
+        
+        DuckType type= getDuckType();
+        sf::String duck_texture_path;
+    	float duckSpeed;
+        if (type == DuckType::BLUE)
+        {
+	        duck_texture_path = duck1_texture_path;
+        	duckSpeed = blueDuckSpeed;
+        }
+        else
+        {
+	        duck_texture_path = duck2_texture_path;
+            duckSpeed = orangeDuckSpeed;
+        }
+        if (!duckTexture.loadFromFile(duck_texture_path)) {
+            printf("Error loading duck texture");
+        }
+
+        
+        DuckController* newDuck = new DuckController(type,duckTexture,duckSpeed);
         newDuck->initialize();
+        newDuck->startRandomMovement();
         duck_list.push_back(newDuck);
         return newDuck;
     }
 
-    void DuckService::destroyEnemy(DuckController* enemy_controller) {
-        auto it = std::find(duck_list.begin(), duck_list.end(), enemy_controller);
-        if (it != duck_list.end()) {
-            delete* it;
-            duck_list.erase(it);
+    bool DuckService::checkHit(sf::Vector2i mousePosition) {
+        for (auto it = duck_list.begin(); it != duck_list.end(); ) {
+            if ((*it)->isClicked(mousePosition)) {
+                delete* it;
+                it = duck_list.erase(it);
+                return true;
+            }
+            else {
+                ++it;
+            }
         }
+        return false;
     }
 }

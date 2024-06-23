@@ -3,24 +3,29 @@
 #include <vector>
 #include "../Time/TimeService.h"
 
+#include "../../Header/Element/DuckController.h"
+
 
 namespace Element {
-
-    class DuckController;
-
+	
     class DuckService {
     private:
+
+        sf::RenderWindow* game_window;
+        Time::TimeService* time_service;
+
         const float spawn_interval = 2.f;
         std::vector<DuckController*> duck_list;
         float spawn_timer=0;
         sf::Texture duckTexture;
-        sf::String duck_texture_path="assets/textures/ducks.png";
-
-    	sf::RenderWindow* window;
-        Time::TimeService* time;
+        sf::String duck1_texture_path="assets/textures/ducks.png";
+        sf::String duck2_texture_path = "assets/textures/ducks_hard.png";
+        int blueDuckSpeed = 300;
+        int orangeDuckSpeed = 500;
 
         void updateSpawnTimer();
         void processDuckSpawn();
+        DuckType getDuckType();
 
     public:
         DuckService();
@@ -30,8 +35,12 @@ namespace Element {
         void update();
         void render();
         void reset();
+        void handleMouseClick(sf::Vector2i mousePosition);
 
         DuckController* spawnDuck();
-        void destroyEnemy(DuckController* duck_controller);
+
+        bool hasActiveDucks();
+        void spawnMoreDucks(int noOfDuck);
+        bool checkHit(sf::Vector2i mousePosition);
     };
 }

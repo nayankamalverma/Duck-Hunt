@@ -1,7 +1,8 @@
 #pragma once
-#include "../Element/DuckService.h"
 #include"../Graphics/GraphicService.h"
 #include "../Event/EventService.h"
+#include "../GamePlay/GamePlayService.h"
+#include "../Sound/SoundService.h"
 #include "../Time/TimeService.h"
 #include "../UI/UIService.h"
 
@@ -13,7 +14,8 @@ namespace Global {
 		Event::EventService* event_service;
 		UI::UIService* ui_service;
 		Time::TimeService* time_service;
-		Element::DuckService* duck_service;
+		GamePlay::GamePlayService* game_play;
+		Sound::SoundService* sound_service;
 	
 		ServiceLocator();
 		~ServiceLocator();
@@ -32,6 +34,7 @@ namespace Global {
 		Event::EventService* getEventService();
 		UI::UIService* getUIService();
 		Time::TimeService* getTimeService();
-		Element::DuckService* getDuckService();
+		GamePlay::GamePlayService* getGamePlayService();
+		Sound::SoundService* getSoundService();
 	};
 }

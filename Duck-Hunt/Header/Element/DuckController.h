@@ -3,44 +3,60 @@
 
 #include <random>
 #include <chrono>
+
+#include "DuckConfig.h"
+
+
 namespace Element {
 
-    enum class MovementDirection
-    {
-        LEFT,
-        RIGHT,
-        DOWN,
-        LEFT_DOWN,
-        RIGHT_DOWN,
-    };
+    
 
-    class DuckController {
+	class DuckController {
     public:
-        DuckController(sf::Texture& texture);
-        ~DuckController() = default;
-
-        sf::RenderWindow* window;
-
-        MovementDirection move_direction;
+        DuckController(DuckType type ,sf::Texture& texture,float speed);
+        ~DuckController();
 
         void initialize();
         void update(float deltaTime);
         void render(sf::RenderWindow* window);
 
-    private:
-        sf::Sprite sprite;
-        std::vector<sf::IntRect> frames;
-        size_t currentFrame;
-        float frameTime;
-        float currentFrameTime;
-        float x_velocity;
-        float y_velocity;
+        bool isClicked(sf::Vector2i mousePosition);
+        void startRandomMovement();
+        float deltaTime;
 
+    private:
+        DuckType duckType;
+        MovementDirection movement_direction;
+        float speed;
+
+        sf::Sprite duckSprite;
+        sf::Vector2f currentPos;
+        std::vector<sf::IntRect> animationFrames;
+        int currentFrame;
+        float frameTime;
+        float animationDuration;
+        float animationTimer;
+        sf::Vector2f direction;
+        bool moving;
+
+        const sf::Vector2f topLeft = sf::Vector2f(5,5);
+        const sf::Vector2f bottomRight = sf::Vector2f(1275,510);
+
+        int frameWidth = 110;
+        int frameHeight = 110;
+
+        void animate(float deltaTime);
+        MovementDirection getRandomDirection();
+        void setInitialPosition();
         void move();
         void moveLeft();
         void moveRight();
-        void moveDiagonalLeft();
-        void moveDiagonalRight();
-        void moveSpriteRandomly(sf::Sprite& sprite, sf::Time duration);
+        void moveDownLeft();
+        void moveDownRight();
+        void moveUpLeft();
+        void moveUpRight();
+
+       
+
     };
 }

@@ -3,22 +3,22 @@
 
 namespace UI
 {
-	namespace PauseMenu
+	namespace GameOverMenu
 	{
-		class PauseMenuUIController
+		class GameOverMenuUIController
 		{
 		private:
-			const sf::String background_texture_path = "assets/textures/2.png";
+			const sf::String background_texture_path = "assets/textures/3.png";
 
 			sf::RenderWindow* game_window;
-
-			sf::Font font;
-			sf::Text highScoreText;
 
 			// Textures:
 			sf::Texture background_texture;
 			sf::Sprite background_sprite;
-			
+			sf::Font font;
+			sf::Text highScoreText;
+			sf::Text scoreText;
+
 			void initializeBackgroundImage();
 			void scaleBackgroundImage();
 
@@ -26,7 +26,7 @@ namespace UI
 			void processButtonInteractions();
 
 		public:
-			PauseMenuUIController();
+			GameOverMenuUIController();
 
 			void initialize();
 			void update();

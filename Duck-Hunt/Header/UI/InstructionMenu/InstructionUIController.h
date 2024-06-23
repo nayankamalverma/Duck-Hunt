@@ -3,22 +3,20 @@
 
 namespace UI
 {
-	namespace PauseMenu
+	namespace InstructionMenu
 	{
-		class PauseMenuUIController
+		class InstructionUIController
 		{
 		private:
-			const sf::String background_texture_path = "assets/textures/2.png";
+			const sf::String background_texture_path = "assets/textures/4.png";
 
 			sf::RenderWindow* game_window;
 
-			sf::Font font;
-			sf::Text highScoreText;
 
 			// Textures:
 			sf::Texture background_texture;
 			sf::Sprite background_sprite;
-			
+
 			void initializeBackgroundImage();
 			void scaleBackgroundImage();
 
@@ -26,7 +24,7 @@ namespace UI
 			void processButtonInteractions();
 
 		public:
-			PauseMenuUIController();
+			InstructionUIController();
 
 			void initialize();
 			void update();

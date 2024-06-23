@@ -1,163 +1,180 @@
 #include "../../Header/Element/DuckController.h"
 
-#include "../../Header/Global/ServiceLocator.h"
+#include "../../Header/Element/ScoreService.h"
+
 
 namespace Element
 {
-    DuckController::DuckController(sf::Texture& texture)
-        : currentFrame(0), frameTime(0.1f), currentFrameTime(0.0f),
-        x_velocity(100.0f), y_velocity(0.0f) {
+    DuckController::DuckController(DuckType type, sf::Texture& texture,float speed)
+		:duckType(type),speed(speed), duckSprite(texture), currentFrame(0), frameTime(0.1f), animationDuration(1.0f), animationTimer(0.0f), moving(false) {
+        std::srand(static_cast<unsigned int>(std::time(0)));
+		for (int i = 0; i < 3; ++i) {
+			animationFrames.push_back(sf::IntRect(i * frameWidth, 0, frameWidth, frameHeight));
+		}
+		duckSprite.setTextureRect(animationFrames[0]);
+       
+	}
 
-        // Set up the frames for animation
-        for (int i = 0; i < 3; ++i) {
-            frames.push_back(sf::IntRect(i * 110, 0, 110, 110));
-        }
-        sprite.setTexture(texture);
-        sprite.setTextureRect(frames[0]);
+    void DuckController::setInitialPosition() {
+        float randomX = static_cast<float>(std::rand() % 1170) ;
+        float fixedY = 510.0f;
+        duckSprite.setPosition(randomX, fixedY);
+        currentPos = sf::Vector2f(randomX, fixedY);
+    }
+
+    DuckController::~DuckController()
+    {
+	    
     }
 
     void DuckController::initialize() {
-        // Set initial position or any other initialization logic
-        sprite.setPosition(100, 410);
     }
 
     void DuckController::update(float deltaTime) {
-        currentFrameTime += deltaTime;
-        if (currentFrameTime >= frameTime) {
-            currentFrame = (currentFrame + 1) % frames.size();
-            sprite.setTextureRect(frames[currentFrame]);
-            currentFrameTime = 0.0f;
-        }
-        // Move the duck
-        sprite.move(x_velocity * deltaTime, y_velocity * deltaTime);
-        //move();
-		//moveSpriteRandomly(sprite, sf::seconds(15));
+        this->deltaTime = deltaTime;
+		animate(deltaTime);
+		if (moving) {
+			move();
+		}
     }
 
     void DuckController::render(sf::RenderWindow* window) {
-        window->draw(sprite);
+        window->draw(duckSprite);
     }
 
-	void DuckController::moveSpriteRandomly(sf::Sprite& sprite, sf::Time duration)
-	{
-		// Create a random device and distribution
-		std::random_device rd;
-		std::mt19937 gen(rd());
-		std::uniform_real_distribution<> dis(-1.f, 1.f);
+    bool DuckController::isClicked(sf::Vector2i mousePosition) {
+        if (duckSprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition))){
+            if (duckType == DuckType::BLUE) ScoreService::getInstance().addScore(10);
+            else  ScoreService::getInstance().addScore(20);
+            return true;
+        }
+        return false;
+    }
 
-		// Calculate the elapsed time
-		sf::Clock clock;
-		sf::Time elapsed = sf::Time::Zero;
+    void DuckController::startRandomMovement() {
+        
+        movement_direction = getRandomDirection();
+    	setInitialPosition();
+        moving = true;
+    }
 
-		// Move the sprite randomly until the specified duration has elapsed
-		while (elapsed < duration)
-		{
-			// Generate random displacements for the sprite
-			float dx = dis(gen) * 10.f; // Adjust the value of 10.f to control the speed of the sprite
-			float dy = dis(gen) * 10.f; // Adjust the value of 10.f to control the speed of the sprite
+    MovementDirection DuckController::getRandomDirection()
+    {
+        int random_value = std::rand() % (static_cast<int>(MovementDirection::RIGHT_UP) + 1);
+        if (movement_direction == static_cast<MovementDirection>(random_value)) getRandomDirection();
+        return static_cast<MovementDirection>(random_value);
+    }
 
-			// Move the sprite
-			sprite.move(dx, dy);
 
-			// Sleep for a short period of time to limit the frame rate
-			sf::sleep(sf::milliseconds(10));
+    void DuckController::animate(float deltaTime) {
+        animationTimer += deltaTime;
+        if (animationTimer >= frameTime) {
+            animationTimer = 0.0f;
+            currentFrame = (currentFrame + 1) % animationFrames.size();
+            duckSprite.setTextureRect(animationFrames[currentFrame]);
+        }
+    }
 
-			// Update the elapsed time
-			elapsed = clock.getElapsedTime();
-		}
-	}
+    void DuckController::move() {
+       switch (movement_direction)
+       {
+       case MovementDirection::LEFT:
+       		moveLeft();
+       		break;
 
-	void DuckController::move()
-	{
-		switch (move_direction)
-		{
-		case::Element::MovementDirection::LEFT:
-			moveLeft();
+       case MovementDirection::RIGHT:
+       		moveRight();
+       		break;
+
+       case MovementDirection::LEFT_DOWN:
+       		moveDownLeft();
 			break;
-
-		case::Element::MovementDirection::RIGHT:
-			moveRight();
+       case MovementDirection::RIGHT_DOWN:
+			moveDownRight();
 			break;
+       case MovementDirection::LEFT_UP:
+           moveUpLeft();
+           break;
+       case MovementDirection::RIGHT_UP:
+           moveUpRight();
+           break;
+       } 
+    }
 
-		case::Element::MovementDirection::LEFT_DOWN:
-			moveDiagonalLeft();
-			break;
+    void DuckController::moveLeft()
+    {
+        currentPos.x -= speed * deltaTime;
+        duckSprite.setScale(-1.f, 1.f);
 
-		case::Element::MovementDirection::RIGHT_DOWN:
-			moveDiagonalRight();
-			break;
-		}
-	}
-
-	void DuckController::moveDiagonalLeft()
-	{
-		
-	}
-
-	void DuckController::moveDiagonalRight()
-	{
-		
-	}
-
-	void DuckController::moveLeft()
-	{
-		
-	}
+        if (currentPos.x - frameWidth <= topLeft.x)
+        {
+            movement_direction = getRandomDirection();
+        }
+        else duckSprite.setPosition(currentPos);
+    }
 
 	void DuckController::moveRight()
-	{
-		
-	}
+    {
+        currentPos.x += speed * deltaTime;
+        duckSprite.setScale(1.f, 1.f);
 
+        if (currentPos.x + frameWidth >= bottomRight.x)
+        {
+            movement_direction = getRandomDirection();
+        }
+        else duckSprite.setPosition(currentPos);
+    }
 
-	/*void DuckController::moveLeft()
-	{
-		sf::Vector2f currentPosition = sprite.getPosition();
-		currentPosition.x -= x_velocity * Global::ServiceLocator::getInstance()->getTimeService()->getDeltaTime();
+    void DuckController::moveDownRight()
+    {
+        currentPos.y += speed * deltaTime;
+        currentPos.x += speed * deltaTime;
+        duckSprite.setScale(1.f, 1.f);
 
-		if (currentPosition.x <= left_most_position.x)
-		{
-			enemy_model->setMovementDirection(MovementDirection::RIGHT_DOWN);
-		}
-		else enemy_model->setEnemyPosition(currentPosition);
-	}
+        if (currentPos.x + frameWidth >= bottomRight.x || currentPos.y + frameHeight >= bottomRight.y)
+        {
+            movement_direction = getRandomDirection();
+        }
+        else duckSprite.setPosition(currentPos);
+    }
 
-	void ThunderSnakeController::moveRight()
-	{
-		sf::Vector2f currentPosition = enemy_model->getEnemyPosition();
-		currentPosition.x += horizontal_movement_speed * ServiceLocator::getInstance()->getTimeService()->getDeltaTime();
+    void DuckController::moveDownLeft()
+    {
+        currentPos.y += speed * deltaTime;
+        currentPos.x -= speed * deltaTime;
+        duckSprite.setScale(-1.f, 1.f);
 
-		if (currentPosition.x >= enemy_model->right_most_position.x)
-		{
-			enemy_model->setMovementDirection(MovementDirection::LEFT_DOWN);
-		}
-		else enemy_model->setEnemyPosition(currentPosition);
-	}
+        if (currentPos.x - frameWidth <= topLeft.x || currentPos.y + frameWidth >= bottomRight.y)
+        {
+            movement_direction = getRandomDirection();
+        }
+        else duckSprite.setPosition(currentPos);
+    }
 
-	void ThunderSnakeController::moveDiagonalLeft()
-	{
-		sf::Vector2f currentPosition = enemy_model->getEnemyPosition();
-		currentPosition.y += vertical_movement_speed * ServiceLocator::getInstance()->getTimeService()->getDeltaTime();
-		currentPosition.x -= horizontal_movement_speed * ServiceLocator::getInstance()->getTimeService()->getDeltaTime();
+    void DuckController::moveUpLeft()
+    {
+        currentPos.y -= speed * deltaTime;
+        currentPos.x -= speed * deltaTime;
+        duckSprite.setScale(-1.f, 1.f);
 
-		if (currentPosition.x <= enemy_model->left_most_position.x)
-		{
-			enemy_model->setMovementDirection(MovementDirection::RIGHT);
-		}
-		else enemy_model->setEnemyPosition(currentPosition);
-	}
+        if (currentPos.x - frameWidth <= topLeft.x || currentPos.y  <= topLeft.y)
+        {
+            movement_direction = getRandomDirection();
+        }
+        else duckSprite.setPosition(currentPos);
+    }
 
-	void DuckController::moveDiagonalRight()
-	{
-		sf::Vector2f currentPosition = enemy_model->getEnemyPosition();
-		currentPosition.y += vertical_movement_speed * ServiceLocator::getInstance()->getTimeService()->getDeltaTime();
-		currentPosition.x += horizontal_movement_speed * ServiceLocator::getInstance()->getTimeService()->getDeltaTime();
+    void DuckController::moveUpRight()
+    {
+        currentPos.y -= speed * deltaTime;
+        currentPos.x += speed * deltaTime;
+        duckSprite.setScale(1.f, 1.f);
 
-		if (currentPosition.x >= enemy_model->right_most_position.x)
-		{
-			enemy_model->setMovementDirection(MovementDirection::LEFT);
-		}
-		else enemy_model->setEnemyPosition(currentPosition);
-	} */
+        if (currentPos.x + frameWidth >= bottomRight.x || currentPos.y  <= topLeft.y)
+        {
+            movement_direction = getRandomDirection();
+        }
+        else duckSprite.setPosition(currentPos);
+    }
 
 }
