@@ -8,6 +8,8 @@ namespace UI
 	using namespace GamePlay;
 	using namespace PauseMenu;
 	using namespace GameOverMenu;
+	using namespace Element;
+	using namespace InstructionMenu;
 
 	UIService::UIService()
 	{
@@ -15,6 +17,7 @@ namespace UI
 		game_play_controller = nullptr;
 		pause_menu_controller = nullptr;
 		game_over_menu_controller = nullptr;
+		instruction_ui_controller = nullptr;
 		createControllers();
 	}
 
@@ -25,6 +28,7 @@ namespace UI
 		game_play_controller = new GamePlayUIController();
 		pause_menu_controller = new PauseMenuUIController();
 		game_over_menu_controller = new GameOverMenuUIController();
+		instruction_ui_controller = new InstructionUIController();
 	}
 
 	UIService::~UIService()
@@ -44,6 +48,7 @@ namespace UI
 			Event::EventService* event = Global::ServiceLocator::getInstance()->getEventService();
 			if(event->pressedEscapeKey() && GameService::getGameState() == GameState::GAMEPLAY)
 			{
+				Global::ServiceLocator::getInstance()->getSoundService()->playSound(Sound::SoundType::BUTTON_CLICK);
 				GameService::setGameState(GameState::PAUSE);
 			}
 		}
@@ -51,6 +56,9 @@ namespace UI
 		{
 		case GameState::MAIN_MENU:
 			return main_menu_controller->update();
+			break;
+		case GameState::INSTRUCTION:
+			return instruction_ui_controller->update();
 			break;
 		case GameState::GAMEPLAY:
 			return game_play_controller->update();
@@ -74,6 +82,9 @@ namespace UI
 		{
 		case GameState::MAIN_MENU:
 			return main_menu_controller->render();
+			break;
+		case GameState::INSTRUCTION:
+			return instruction_ui_controller->render();
 			break;
 		case GameState::GAMEPLAY :
 			return 	 game_play_controller->render();
@@ -104,6 +115,7 @@ namespace UI
 		game_play_controller->initialize();
 		pause_menu_controller->initialize();
 		game_over_menu_controller->initialize();
+		instruction_ui_controller->initialize();
 	}
 
 	void UIService::destroy()
@@ -111,5 +123,7 @@ namespace UI
 		delete(main_menu_controller);
 		delete(game_play_controller);
 		delete(pause_menu_controller);
+		delete(game_over_menu_controller);
+		delete(instruction_ui_controller);
 	}
 }

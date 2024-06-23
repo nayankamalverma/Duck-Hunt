@@ -3,6 +3,7 @@
 #include "GamePlay/GamePlayUIController.h"
 #include "PauseMenu/PauseMenuUIcontroller.h"
 #include "GameOver/GameOverMenuUIController.h"
+#include "InstructionMenu/InstructionUIController.h"
 
 namespace UI
 {
@@ -13,6 +14,7 @@ namespace UI
 		GamePlay::GamePlayUIController* game_play_controller;
 		PauseMenu::PauseMenuUIController* pause_menu_controller;
 		GameOverMenu::GameOverMenuUIController* game_over_menu_controller;
+		InstructionMenu::InstructionUIController* instruction_ui_controller;
 
 		void createControllers();
 		void initializeControllers();

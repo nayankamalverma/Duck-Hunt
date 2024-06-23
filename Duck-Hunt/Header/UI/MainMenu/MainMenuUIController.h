@@ -14,7 +14,8 @@ namespace UI
 			const sf::String instructions_button_texture_path = "assets/textures/instructions_button.png-";
 			const sf::String quit_button_texture_path = "assets/textures/quit_button.png-";
 
-
+			sf::Font font;
+			sf::Text highScoreText;
 			// Constants:
 			const float button_width = 400.f;
 			const float button_height = 140.f;

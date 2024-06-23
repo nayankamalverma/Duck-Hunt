@@ -15,6 +15,9 @@ namespace UI
 			// Textures:
 			sf::Texture background_texture;
 			sf::Sprite background_sprite;
+			sf::Font font;
+			sf::Text highScoreText;
+			sf::Text scoreText;
 
 			void initializeBackgroundImage();
 			void scaleBackgroundImage();

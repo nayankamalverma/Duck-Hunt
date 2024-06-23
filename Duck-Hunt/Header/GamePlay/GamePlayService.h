@@ -17,14 +17,21 @@ namespace GamePlay
 		sf::Text ammoText;
 		sf::Text healthText;
 		sf::Clock roundTimer;
+		sf::Text waveText;
+		sf::Text scoreText;
 
-		int ammo;
-		int health;
-		int score;
-		const sf::Time roundTimeLimit = sf::seconds(15.f);
 		const int initialAmmo = 5;
 		const int initialHealth = 5;
+		int noOfDucks;
 
+		int health;
+		int score;
+		int ammo;
+		int wave;
+		sf::Time roundTimeLimit = sf::seconds(15.f);
+		
+
+		bool isGameOver;
 	public:
 		GamePlayService();
 		~GamePlayService();

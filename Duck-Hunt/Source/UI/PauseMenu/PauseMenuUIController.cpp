@@ -1,3 +1,4 @@
+#include "../../../Header/Element/ScoreService.h"
 #include "../../../Header/UI/PauseMenu/PauseMenuUIcontroller.h"
 #include "../../../header/Main/GameService.h"
 #include "../../../header/Global/ServiceLocator.h"
@@ -15,6 +16,17 @@ namespace UI
 		PauseMenuUIController::PauseMenuUIController()
 		{
 			game_window = nullptr;
+
+			//text
+			if (!font.loadFromFile("assets/phenomicon.ttf"))
+			{
+				printf("font not found.");
+			}
+			highScoreText.setFont(font);
+			highScoreText.setFont(font);
+			highScoreText.setCharacterSize(50);
+			highScoreText.setPosition(510, 180);
+			highScoreText.setFillColor(sf::Color::Yellow);
 		}
 
 		void PauseMenuUIController::initialize()
@@ -44,12 +56,14 @@ namespace UI
 
 		 void PauseMenuUIController::update()
 		 {
+			 highScoreText.setString("HighScore : " + std::to_string(Element::ScoreService::getInstance().getHighScore()));
 			 processButtonInteractions();
 		 }
 
 		void PauseMenuUIController::render()
 		{
 			game_window->draw(background_sprite);
+			game_window->draw(highScoreText);
 		}
 
 		void PauseMenuUIController::processButtonInteractions()
@@ -63,10 +77,12 @@ namespace UI
 				{
 					if (mouse_position.y > 275 && mouse_position.y < 345) //if cursor is in y range for play button
 					{
+						Global::ServiceLocator::getInstance()->getSoundService()->playSound(Sound::SoundType::BUTTON_CLICK);
 						GameService::setGameState(GameState::GAMEPLAY);
 					}
 					else if (mouse_position.y > 380 && mouse_position.y < 450) //if cursor is in y range for 'how to play' button
 					{
+						Global::ServiceLocator::getInstance()->getSoundService()->playSound(Sound::SoundType::BUTTON_CLICK);
 						GameService::setGameState(GameState::MAIN_MENU);
 					}
 				}

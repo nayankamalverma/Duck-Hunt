@@ -1,5 +1,6 @@
 #include "../../Header/Global/ServiceLocator.h"
 
+#include "../../Header/Element/ScoreService.h"
 #include "../../header/Main/GameService.h"
 
 namespace Global {
@@ -9,14 +10,15 @@ namespace Global {
 	using namespace Event;
 	using namespace UI;
 	using namespace Time;
-	using namespace Element;
 	using namespace GamePlay;
+	using namespace Sound;
 
 	ServiceLocator::ServiceLocator() {
 		graphic_service = nullptr;
 		event_service = nullptr;
 		ui_service = nullptr;
 		time_service = nullptr;
+		sound_service = nullptr;
 		game_play = nullptr;
 		createService();
 	}
@@ -25,6 +27,7 @@ namespace Global {
 		event_service = new EventService();
 		time_service = new TimeService();
 		graphic_service = new GraphicService();
+		sound_service = new Sound::SoundService();
 		ui_service = new UIService();
 		game_play = new GamePlayService();
 	}
@@ -43,16 +46,22 @@ namespace Global {
 		graphic_service->initialize();
 		event_service->initialize();
 		time_service->initialize();
+		sound_service->initialize();
 		ui_service->initialize();
 		game_play->initialize();
 
 	} 
 
 	void ServiceLocator::update(){
+		if(GameService::getGameState()==GameState::GAME_OVER)
+		{
+			delete(game_play);
+			game_play = new GamePlayService();
+			game_play->initialize();
+		}
 		graphic_service->update();
 		event_service->update();
 		time_service->update();
-		
 		ui_service->update();
 		if (GameService::getGameState() == GameState::GAMEPLAY)
 		{
@@ -76,17 +85,20 @@ namespace Global {
 		delete(ui_service);
 		delete(time_service);
 		delete(game_play);
+		delete(sound_service);
 		time_service = nullptr;
 		graphic_service=nullptr;
 		event_service = nullptr;
 		ui_service = nullptr;
 		game_play = nullptr;
+		sound_service = nullptr;
 	}
 
 	GraphicService* ServiceLocator::getGraphicService(){ return graphic_service;}
 	EventService* ServiceLocator::getEventService() { return event_service; }
 	UIService* ServiceLocator::getUIService() { return ui_service; }
 	TimeService* ServiceLocator::getTimeService() { return time_service; }
-	GamePlay::GamePlayService* ServiceLocator::getGamePlayService() { return game_play; }
+	GamePlayService* ServiceLocator::getGamePlayService() { return game_play; }
+	SoundService* ServiceLocator::getSoundService(){return sound_service;  	}
 
 }

@@ -2,6 +2,7 @@
 #include"../Graphics/GraphicService.h"
 #include "../Event/EventService.h"
 #include "../GamePlay/GamePlayService.h"
+#include "../Sound/SoundService.h"
 #include "../Time/TimeService.h"
 #include "../UI/UIService.h"
 
@@ -14,6 +15,7 @@ namespace Global {
 		UI::UIService* ui_service;
 		Time::TimeService* time_service;
 		GamePlay::GamePlayService* game_play;
+		Sound::SoundService* sound_service;
 	
 		ServiceLocator();
 		~ServiceLocator();
@@ -33,5 +35,6 @@ namespace Global {
 		UI::UIService* getUIService();
 		Time::TimeService* getTimeService();
 		GamePlay::GamePlayService* getGamePlayService();
+		Sound::SoundService* getSoundService();
 	};
 }

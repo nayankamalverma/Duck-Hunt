@@ -8,6 +8,7 @@ namespace Main
 	{
 		BOOT,
 		MAIN_MENU,
+		INSTRUCTION,
 		GAMEPLAY,
 		PAUSE,
 		GAME_OVER
