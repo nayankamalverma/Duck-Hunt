@@ -15,9 +15,12 @@ namespace UI
 
 		PauseMenuUIController::PauseMenuUIController()
 		{
-			game_window = nullptr;
+		}
+		void PauseMenuUIController::initialize(sf::RenderWindow* window)
+		{
+			game_window = window;
+			BaseUIController::initialize(window);
 
-			//text
 			if (!font.loadFromFile("assets/phenomicon.ttf"))
 			{
 				printf("font not found.");
@@ -29,36 +32,11 @@ namespace UI
 			highScoreText.setFillColor(sf::Color::Yellow);
 		}
 
-		void PauseMenuUIController::initialize()
+		void PauseMenuUIController::update()
 		{
-			game_window = ServiceLocator::getInstance()->getGraphicService()->getGameWindow();
-			initializeBackgroundImage();
-		}
-
-		void PauseMenuUIController::initializeBackgroundImage()
-		{
-			
-			if (background_texture.loadFromFile(background_texture_path))
-			{
-				printf("\nbg\n");
-				background_sprite.setTexture(background_texture);
-				scaleBackgroundImage();
-			}
-		}
-
-		void PauseMenuUIController::scaleBackgroundImage()
-		{
-			background_sprite.setScale(
-				static_cast<float>(game_window->getSize().x) / background_sprite.getTexture()->getSize().x,
-				static_cast<float>(game_window->getSize().y) / background_sprite.getTexture()->getSize().y
-			);
-		}
-
-		 void PauseMenuUIController::update()
-		 {
 			 highScoreText.setString("HighScore : " + std::to_string(Element::ScoreService::getInstance().getHighScore()));
 			 processButtonInteractions();
-		 }
+		}
 
 		void PauseMenuUIController::render()
 		{
@@ -84,6 +62,7 @@ namespace UI
 					{
 						Global::ServiceLocator::getInstance()->getSoundService()->playSound(Sound::SoundType::BUTTON_CLICK);
 						GameService::setGameState(GameState::MAIN_MENU);
+						
 					}
 				}
 			}

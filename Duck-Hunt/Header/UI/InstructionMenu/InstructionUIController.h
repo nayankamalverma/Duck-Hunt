@@ -1,35 +1,23 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include "../BaseUIController.h"
 
 namespace UI
 {
-	namespace InstructionMenu
-	{
-		class InstructionUIController
-		{
-		private:
-			const sf::String background_texture_path = "assets/textures/4.png";
+    namespace InstructionMenu
+    {
+        class InstructionUIController : public BaseUIController
+        {
+        private:
+            const sf::String background_texture_path = "assets/textures/4.png";
+			void processButtonInteractions() override;
+        protected:
+            const sf::String& getBackgroundTexturePath() const override { return background_texture_path; }
 
-			sf::RenderWindow* game_window;
+        public:
+            InstructionUIController();
 
-
-			// Textures:
-			sf::Texture background_texture;
-			sf::Sprite background_sprite;
-
-			void initializeBackgroundImage();
-			void scaleBackgroundImage();
-
-
-			void processButtonInteractions();
-
-		public:
-			InstructionUIController();
-
-			void initialize();
-			void update();
-			void render();
-
-		};
-	}
+            void initialize(sf::RenderWindow* w) override;
+            void update() override;
+        };
+    }
 }

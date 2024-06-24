@@ -8,39 +8,11 @@ namespace UI
 {
 	namespace InstructionMenu
 	{
-		using namespace Global;
-		using namespace Main;
-		using namespace Graphic;
-		using namespace Event;
+		InstructionUIController::InstructionUIController() {}
 
-		InstructionUIController::InstructionUIController()
+		void InstructionUIController::initialize(sf::RenderWindow* window)
 		{
-			game_window = nullptr;
-
-		}
-
-		void InstructionUIController::initialize()
-		{
-			game_window = ServiceLocator::getInstance()->getGraphicService()->getGameWindow();
-			initializeBackgroundImage();
-		}
-
-		void InstructionUIController::initializeBackgroundImage()
-		{
-
-			if (background_texture.loadFromFile(background_texture_path))
-			{
-				background_sprite.setTexture(background_texture);
-				scaleBackgroundImage();
-			}
-		}
-
-		void InstructionUIController::scaleBackgroundImage()
-		{
-			background_sprite.setScale(
-				static_cast<float>(game_window->getSize().x) / background_sprite.getTexture()->getSize().x,
-				static_cast<float>(game_window->getSize().y) / background_sprite.getTexture()->getSize().y
-			);
+			BaseUIController::initialize(window);
 		}
 
 		void InstructionUIController::update()
@@ -48,25 +20,19 @@ namespace UI
 			processButtonInteractions();
 		}
 
-		void InstructionUIController::render()
-		{
-			game_window->draw(background_sprite);
-		}
-
 		void InstructionUIController::processButtonInteractions()
 		{
 			sf::Vector2f mouse_position = sf::Vector2f(sf::Mouse::getPosition(*game_window));
 
-			EventService* event_service = ServiceLocator::getInstance()->getEventService();
+			Event::EventService* event_service = Global::ServiceLocator::getInstance()->getEventService();
 			if (event_service->pressedLeftMouseButton())
 			{
-				printf("%f _ %f\n,", mouse_position.x, mouse_position.y);
 				if (mouse_position.x > 1060 && mouse_position.x < 1150) //Since all buttons are in a perfect column, they will all be in this x range
 				{
 					if (mouse_position.y > 20 && mouse_position.y < 100) //if cursor is in y range for play button
 					{
-						ServiceLocator::getInstance()->getSoundService()->playSound(Sound::SoundType::BUTTON_CLICK);
-						GameService::setGameState(GameState::MAIN_MENU);
+						Global::ServiceLocator::getInstance()->getSoundService()->playSound(Sound::SoundType::BUTTON_CLICK);
+						Main::GameService::setGameState(Main::GameState::MAIN_MENU);
 					}
 				}
 			}

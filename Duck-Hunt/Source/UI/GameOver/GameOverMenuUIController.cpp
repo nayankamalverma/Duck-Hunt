@@ -2,7 +2,6 @@
 #include "../../../Header/UI/GameOver/GameOverMenuUIcontroller.h"
 #include "../../../header/Main/GameService.h"
 #include "../../../header/Global/ServiceLocator.h"
-#include "../../../header/Graphics//GraphicService.h"
 
 namespace UI
 {
@@ -13,17 +12,12 @@ namespace UI
 		using namespace Graphic;
 		using namespace Event;
 
-		GameOverMenuUIController::GameOverMenuUIController()
-		{
-			game_window = nullptr;
-		}
+		GameOverMenuUIController::GameOverMenuUIController() {}
 
-		void GameOverMenuUIController::initialize()
+		void GameOverMenuUIController::initialize(sf::RenderWindow* window)
 		{
-			game_window = ServiceLocator::getInstance()->getGraphicService()->getGameWindow();
-			initializeBackgroundImage();
-
-			//text
+			game_window = window;
+			BaseUIController::initialize(window);
 			if (!font.loadFromFile("assets/phenomicon.ttf"))
 			{
 				printf("font not found.");
@@ -37,25 +31,6 @@ namespace UI
 			scoreText.setCharacterSize(50);
 			scoreText.setPosition(450, 340);
 			scoreText.setFillColor(sf::Color::Yellow);
-		}
-
-		void GameOverMenuUIController::initializeBackgroundImage()
-		{
-
-			if (background_texture.loadFromFile(background_texture_path))
-			{
-				printf("\nbg GameOverMenuUIController\n");
-				background_sprite.setTexture(background_texture);
-				scaleBackgroundImage();
-			}
-		}
-
-		void GameOverMenuUIController::scaleBackgroundImage()
-		{
-			background_sprite.setScale(
-				static_cast<float>(game_window->getSize().x) / background_sprite.getTexture()->getSize().x, 
-				static_cast<float>(game_window->getSize().y) / background_sprite.getTexture()->getSize().y
-			);
 		}
 
 		void GameOverMenuUIController::update()

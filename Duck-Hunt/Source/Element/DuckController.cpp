@@ -6,7 +6,7 @@
 namespace Element
 {
     DuckController::DuckController(DuckType type, sf::Texture& texture,float speed)
-		:duckType(type),speed(speed), duckSprite(texture), currentFrame(0), frameTime(0.1f), animationDuration(1.0f), animationTimer(0.0f), moving(false) {
+		:duckType(type),DuckSpeed(speed), duckSprite(texture), currentFrame(0), frameTime(0.1f), animationDuration(1.0f), animationTimer(0.0f), moving(false) {
         std::srand(static_cast<unsigned int>(std::time(0)));
 		for (int i = 0; i < 3; ++i) {
 			animationFrames.push_back(sf::IntRect(i * frameWidth, 0, frameWidth, frameHeight));
@@ -60,9 +60,9 @@ namespace Element
 
     MovementDirection DuckController::getRandomDirection()
     {
-        int random_value = std::rand() % (static_cast<int>(MovementDirection::RIGHT_UP) + 1);
+        int random_value = std::rand() % 5 + 1;
         if (movement_direction == static_cast<MovementDirection>(random_value)) getRandomDirection();
-        return static_cast<MovementDirection>(random_value);
+    	return static_cast<MovementDirection>(random_value);
     }
 
 
@@ -79,102 +79,43 @@ namespace Element
        switch (movement_direction)
        {
        case MovementDirection::LEFT:
-       		moveLeft();
+           move(-1, 0, -1, 1);
        		break;
 
        case MovementDirection::RIGHT:
-       		moveRight();
+           move(1, 0, 1, 1);
        		break;
 
        case MovementDirection::LEFT_DOWN:
-       		moveDownLeft();
+           move(-1, 1, -1, 1);
 			break;
        case MovementDirection::RIGHT_DOWN:
-			moveDownRight();
+          move(1, 1, 1, 1);
 			break;
        case MovementDirection::LEFT_UP:
-           moveUpLeft();
+            move(-1, -1, -1, 1);
            break;
        case MovementDirection::RIGHT_UP:
-           moveUpRight();
+          move(1, -1, 1, 1);
            break;
        } 
     }
 
-    void DuckController::moveLeft()
+    void DuckController::move(int xDir, int yDir, int offset_x, int offset_y)
     {
-        currentPos.x -= speed * deltaTime;
-        duckSprite.setScale(-1.f, 1.f);
 
-        if (currentPos.x - frameWidth <= topLeft.x)
-        {
+        float speed = DuckSpeed * deltaTime;
+        currentPos.x += xDir * speed;
+    	currentPos.y += yDir * speed;
+        duckSprite.setScale(offset_x, offset_y);
+
+        bool outOfBoundsX = (xDir < 0 && currentPos.x - frameWidth <= topLeft.x) ||
+            (xDir > 0 && currentPos.x + frameWidth >= bottomRight.x);
+        bool outOfBoundsY = (yDir < 0 && currentPos.y <= topLeft.y) ||
+            (yDir > 0 && currentPos.y + frameHeight >= bottomRight.y);
+        if (outOfBoundsX || outOfBoundsY) {
             movement_direction = getRandomDirection();
         }
         else duckSprite.setPosition(currentPos);
     }
-
-	void DuckController::moveRight()
-    {
-        currentPos.x += speed * deltaTime;
-        duckSprite.setScale(1.f, 1.f);
-
-        if (currentPos.x + frameWidth >= bottomRight.x)
-        {
-            movement_direction = getRandomDirection();
-        }
-        else duckSprite.setPosition(currentPos);
-    }
-
-    void DuckController::moveDownRight()
-    {
-        currentPos.y += speed * deltaTime;
-        currentPos.x += speed * deltaTime;
-        duckSprite.setScale(1.f, 1.f);
-
-        if (currentPos.x + frameWidth >= bottomRight.x || currentPos.y + frameHeight >= bottomRight.y)
-        {
-            movement_direction = getRandomDirection();
-        }
-        else duckSprite.setPosition(currentPos);
-    }
-
-    void DuckController::moveDownLeft()
-    {
-        currentPos.y += speed * deltaTime;
-        currentPos.x -= speed * deltaTime;
-        duckSprite.setScale(-1.f, 1.f);
-
-        if (currentPos.x - frameWidth <= topLeft.x || currentPos.y + frameWidth >= bottomRight.y)
-        {
-            movement_direction = getRandomDirection();
-        }
-        else duckSprite.setPosition(currentPos);
-    }
-
-    void DuckController::moveUpLeft()
-    {
-        currentPos.y -= speed * deltaTime;
-        currentPos.x -= speed * deltaTime;
-        duckSprite.setScale(-1.f, 1.f);
-
-        if (currentPos.x - frameWidth <= topLeft.x || currentPos.y  <= topLeft.y)
-        {
-            movement_direction = getRandomDirection();
-        }
-        else duckSprite.setPosition(currentPos);
-    }
-
-    void DuckController::moveUpRight()
-    {
-        currentPos.y -= speed * deltaTime;
-        currentPos.x += speed * deltaTime;
-        duckSprite.setScale(1.f, 1.f);
-
-        if (currentPos.x + frameWidth >= bottomRight.x || currentPos.y  <= topLeft.y)
-        {
-            movement_direction = getRandomDirection();
-        }
-        else duckSprite.setPosition(currentPos);
-    }
-
 }
