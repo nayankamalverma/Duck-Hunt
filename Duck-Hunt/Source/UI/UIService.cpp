@@ -5,14 +5,16 @@ namespace UI
 {
 	using namespace Main;
 	using namespace MainMenu;
-	using namespace GamePlay;
+	using namespace GamePlayUI;
 	using namespace PauseMenu;
 	using namespace GameOverMenu;
 	using namespace Element;
 	using namespace InstructionMenu;
 
+
 	UIService::UIService()
 	{
+		game_window = nullptr;
 		main_menu_controller = nullptr;
 		game_play_controller = nullptr;
 		pause_menu_controller = nullptr;
@@ -38,6 +40,7 @@ namespace UI
 
 	void UIService::initialize()
 	{
+		game_window = Global::ServiceLocator::getInstance()->getGraphicService()->getGameWindow();
 		initializeControllers();
 	}
 
@@ -46,7 +49,7 @@ namespace UI
 		if(GameService::getGameState()==GameState::GAMEPLAY)
 		{
 			Event::EventService* event = Global::ServiceLocator::getInstance()->getEventService();
-			if(event->pressedEscapeKey() && GameService::getGameState() == GameState::GAMEPLAY)
+			if(( event->pressedEscapeKey()) && GameService::getGameState() == GameState::GAMEPLAY)
 			{
 				Global::ServiceLocator::getInstance()->getSoundService()->playSound(Sound::SoundType::BUTTON_CLICK);
 				GameService::setGameState(GameState::PAUSE);
@@ -70,8 +73,8 @@ namespace UI
 			return game_over_menu_controller->update();
 			break;
 		default:
-				printf("Ui service default update");
-				break;
+			printf("Ui service default update");
+			break;
 		}
 		
 	}
@@ -100,22 +103,13 @@ namespace UI
 		}
 	}
 
-	void UIService::showScreen()
-	{
-		switch (GameService::getGameState())
-		{
-		case GameState::MAIN_MENU:
-			return main_menu_controller->show();
-		}
-	}
-
 	void UIService::initializeControllers()
 	{
-		main_menu_controller->initialize();
-		game_play_controller->initialize();
-		pause_menu_controller->initialize();
-		game_over_menu_controller->initialize();
-		instruction_ui_controller->initialize();
+		main_menu_controller->initialize(game_window);
+		game_play_controller->initialize(game_window);
+		pause_menu_controller->initialize(game_window);
+		game_over_menu_controller->initialize(game_window);
+		instruction_ui_controller->initialize(game_window);
 	}
 
 	void UIService::destroy()

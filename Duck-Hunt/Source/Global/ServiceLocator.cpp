@@ -53,7 +53,7 @@ namespace Global {
 	} 
 
 	void ServiceLocator::update(){
-		if(GameService::getGameState()==GameState::GAME_OVER)
+		if(GameService::getGameState()==GameState::MAIN_MENU)
 		{
 			delete(game_play);
 			game_play = new GamePlayService();

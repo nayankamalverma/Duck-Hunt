@@ -27,7 +27,7 @@ namespace Element {
     private:
         DuckType duckType;
         MovementDirection movement_direction;
-        float speed;
+        float DuckSpeed;
 
         sf::Sprite duckSprite;
         sf::Vector2f currentPos;
@@ -49,12 +49,7 @@ namespace Element {
         MovementDirection getRandomDirection();
         void setInitialPosition();
         void move();
-        void moveLeft();
-        void moveRight();
-        void moveDownLeft();
-        void moveDownRight();
-        void moveUpLeft();
-        void moveUpRight();
+        void move(int x, int y, int offset_x, int offset_y);
 
        
 

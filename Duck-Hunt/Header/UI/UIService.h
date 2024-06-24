@@ -1,5 +1,6 @@
 #pragma once
-#include "../../header/UI/MainMenu/MainMenuUIController.h"
+#include "BaseUIController.h"
+#include "MainMenu/MainMenuUIController.h"
 #include "GamePlay/GamePlayUIController.h"
 #include "PauseMenu/PauseMenuUIcontroller.h"
 #include "GameOver/GameOverMenuUIController.h"
@@ -7,14 +8,16 @@
 
 namespace UI
 {
-	class UIService
+	class UIService				   
 	{
 	private:
-		MainMenu::MainMenuUIController* main_menu_controller;
-		GamePlay::GamePlayUIController* game_play_controller;
-		PauseMenu::PauseMenuUIController* pause_menu_controller;
-		GameOverMenu::GameOverMenuUIController* game_over_menu_controller;
-		InstructionMenu::InstructionUIController* instruction_ui_controller;
+		sf::RenderWindow* game_window;
+
+		BaseUIController* main_menu_controller;
+		BaseUIController* game_play_controller;
+		BaseUIController* pause_menu_controller;
+		BaseUIController* game_over_menu_controller;
+		BaseUIController* instruction_ui_controller;
 
 		void createControllers();
 		void initializeControllers();
@@ -27,6 +30,5 @@ namespace UI
 		void initialize();
 		void update();
 		void render();
-		void showScreen();
 	};
 }

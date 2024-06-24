@@ -19,7 +19,7 @@ namespace Graphic {
 
 	sf::RenderWindow* GraphicService::createGameWindow() {
 		setVideoMode();
-		return new sf::RenderWindow(*video_mode, game_window_title, sf::Style::Default);
+		return new sf::RenderWindow(*video_mode, game_window_title, sf::Style::Close | sf::Style::Titlebar);
 	}
 
 	void GraphicService::setVideoMode()

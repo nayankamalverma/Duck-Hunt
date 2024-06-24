@@ -66,6 +66,9 @@
     <ClCompile Include="Source\UI\InstructionMenu\InstructionUIController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\UI\BaseUIController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Main\GameService.h">
@@ -117,6 +120,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header\UI\InstructionMenu\InstructionUIController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\UI\BaseUIController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

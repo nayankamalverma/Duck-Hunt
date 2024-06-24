@@ -34,7 +34,6 @@ namespace Main
 	void GameService::showMainMenu()
 	{
 		setGameState(GameState::MAIN_MENU);
-		ServiceLocator::getInstance()->getUIService()->showScreen();
 	}
 
 	bool GameService::isRunning() { return service_locator->getGraphicService()->isGameWindowOpen(); }

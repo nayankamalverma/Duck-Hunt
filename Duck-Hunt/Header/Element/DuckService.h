@@ -35,7 +35,6 @@ namespace Element {
         void update();
         void render();
         void reset();
-        void handleMouseClick(sf::Vector2i mousePosition);
 
         DuckController* spawnDuck();
 

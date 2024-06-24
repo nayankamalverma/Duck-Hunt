@@ -1,37 +1,28 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "../BaseUIController.h"
 
 namespace UI
 {
 	namespace PauseMenu
 	{
-		class PauseMenuUIController
-		{
-		private:
-			const sf::String background_texture_path = "assets/textures/2.png";
+        class PauseMenuUIController : public UI::BaseUIController
+        {
+        private:
+            const sf::String background_texture_path = "assets/textures/2.png";
 
-			sf::RenderWindow* game_window;
+            sf::Font font;
+            sf::Text highScoreText;
 
-			sf::Font font;
-			sf::Text highScoreText;
+            void processButtonInteractions() override;
+        protected:
+            const sf::String& getBackgroundTexturePath() const override { return background_texture_path; }
 
-			// Textures:
-			sf::Texture background_texture;
-			sf::Sprite background_sprite;
-			
-			void initializeBackgroundImage();
-			void scaleBackgroundImage();
-
-
-			void processButtonInteractions();
-
-		public:
-			PauseMenuUIController();
-
-			void initialize();
-			void update();
-			void render();
-
-		};
+        public:
+            PauseMenuUIController();
+            void initialize(sf::RenderWindow* window) override;
+            void update() override;
+            void render() override;
+        };
 	}
 }

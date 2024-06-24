@@ -114,6 +114,7 @@ namespace GamePlay
 	{
 		delete(duck_service);
 	}
+
 	void GamePlayService::handleMouseClick(sf::Vector2i mousePosition) {
 		Global::ServiceLocator::getInstance()->getSoundService()->playSound(Sound::SoundType::BULLET_FIRE);
 		ammo--;
